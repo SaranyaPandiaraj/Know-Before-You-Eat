@@ -1,9 +1,9 @@
 import os
-from uuid import uuid4
+# from uuid import uuid4
 
 from flask import Flask, request, render_template, send_from_directory
 
-__author__ = 'ibininja'
+
 
 app = Flask(__name__)
 # app = Flask(__name__, static_folder="images")
@@ -14,7 +14,7 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 @app.route("/")
 def index():
-    return render_template("today.html")
+    return render_template("index.html")
 
 @app.route("/upload", methods=["POST"])
 def upload():
