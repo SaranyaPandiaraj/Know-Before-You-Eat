@@ -1,6 +1,7 @@
 import os
 import json
 import numpy as np
+import pandas as pd
 
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
@@ -9,6 +10,10 @@ from tensorflow.keras.preprocessing import image
 from flask import Flask, redirect, url_for, request, render_template
 from werkzeug.utils import secure_filename
 from gevent.pywsgi import WSGIServer
+
+from flask_pymongo import PyMongo
+
+
 
 # Define a flask app
 app = Flask(__name__)
@@ -25,6 +30,8 @@ with open(os.path.join("static","food_list", "food_list.json"), "r", encoding="u
 class_names = sorted(food_labels.keys())
 label_dict = dict(zip(range(len(class_names)), class_names))
 
+food_calories = pd.read_csv(os.path.join("static","food_list", "Food_calories.csv"))
+
 def prepare_image(img_path):
     img = image.load_img(img_path, target_size=(224, 224))
     # Preprocessing the image
@@ -32,9 +39,14 @@ def prepare_image(img_path):
     x = np.expand_dims(x, axis=0)
     return x
 
+# Use PyMongo to establish Mongo connection
+#mongo = PyMongo(app, uri="mongodb://localhost:27017/Food")
+#mongo.db.collection.remove( { } );
+
 @app.route("/", methods=["GET"])
 def index():
     # Main page
+    #Food = mongo.db.collection.find_one()
     return render_template('Know_Before_You_Eat.html')
 
 @app.route("/predict", methods=["GET", "POST"])
@@ -55,8 +67,38 @@ def upload():
         predictions = preds.argmax(axis=-1)[0]
         pred_label = label_dict[predictions]
 
-        return pred_label+" - "+"Prob:"+str(preds.max(axis=-1)[0])
+        food_retrieve = food_calories[food_calories["name"]==pred_label]
+
+        food_nutrional_min = food_retrieve["nutritional value min,kcal"]
+        food_nutrional_min=np.array(food_nutrional_min)
+        food_nutrional_min = str(food_nutrional_min)
+
+
+        food_nutrional_max = food_retrieve["nutritional value max,kcal"]
+        food_nutrional_max=np.array(food_nutrional_max)
+        food_nutrional_max = str(food_nutrional_max)
+
+        Unit = food_retrieve["unit"]
+        Unit=np.array(Unit)
+        Unit = str(Unit)
+
+        Calories = food_retrieve["average cal"]
+        Calories=np.array(Calories)
+        Calories = str(Calories)
+
+        #Food_Data = {"food_nutrional_min":food_nutrional_min}
+
+        #mongo.db.collection.update({}, Food_Data, upsert=True)
+        
+        return pred_label+" => "+"Probability :"+str(preds.max(axis=-1)[0]) + '\n' + \
+        "                                       <br> Nutrional Value - Min (kcal) :" + food_nutrional_min + '\n' + \
+        "                                       Nutrional Value - Max (kcal):" + food_nutrional_max + '\n' + \
+        "                                       Unit" + Unit + '\n' + \
+        "                                       Average Calories" + Calories
+        
+
     return None
+
 
 if __name__ == "__main__":
     # Serve the app with gevent
