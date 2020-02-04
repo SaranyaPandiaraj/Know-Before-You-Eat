@@ -19,11 +19,12 @@ from flask_pymongo import PyMongo
 app = Flask(__name__)
 
 # Model saved with Keras model.save()
-MODEL_PATH = os.path.join("models","keras_models", "model-mobilenet-RMSprop0.0002-001-0.930507-0.647776.h5")
+#MODEL_PATH = os.path.join("models","keras_models", "model-mobilenet-RMSprop0.0002-001-0.930507-0.647776.h5")
+MODEL_PATH = os.path.join("models","keras_models", "model-mobilenet-RMSprop0.0002-007-0.984544-0.698516.h5")
 
 # Load your trained model
 model = load_model(MODEL_PATH)
-print("Model loaded. Check http://127.0.0.1:5000/")
+print("Model loaded successfully !! Check http://127.0.0.1:5000/")
 
 with open(os.path.join("static","food_list", "food_list.json"), "r", encoding="utf8") as f:
     food_labels = json.load(f)
@@ -90,12 +91,13 @@ def upload():
 
         #mongo.db.collection.update({}, Food_Data, upsert=True)
         
-        return pred_label+" => "+"Probability :"+str(preds.max(axis=-1)[0]) + '\n' + \
-        "                                       <br> Nutrional Value - Min (kcal) :" + food_nutrional_min + '\n' + \
-        "                                       Nutrional Value - Max (kcal):" + food_nutrional_max + '\n' + \
-        "                                       Unit" + Unit + '\n' + \
-        "                                       Average Calories" + Calories
+        return "<i>" + pred_label.title()+" </i> => "+"<b>Probability : </b>"+str(preds.max(axis=-1)[0]) + '\n' + "<br><br>" +\
+        "<b>Nutrional Value - Min (kcal) : </b>" + food_nutrional_min + '\n' + "<br><br>" + \
+        "<b>Nutrional Value - Max (kcal): </b>" + food_nutrional_max + '\n' + "<br><br>" + \
+        "<b> Unit : </b>" + Unit + '\n' + \
+        "<b> Avg Cal : </b>" + Calories
         
+
 
     return None
 
