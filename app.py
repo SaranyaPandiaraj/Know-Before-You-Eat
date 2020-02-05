@@ -11,7 +11,7 @@ from flask import Flask, redirect, url_for, request, render_template
 from werkzeug.utils import secure_filename
 from gevent.pywsgi import WSGIServer
 
-from flask_pymongo import PyMongo
+
 
 from splinter import Browser
 from bs4 import BeautifulSoup
