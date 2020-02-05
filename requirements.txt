@@ -16,7 +16,7 @@ Pillow==7.0.0
 splinter==0.13.0
 sseclient==0.0.24
 tensorboard==2.1.0
-tensorflow==1.14.0
+tensorflow==1.15.0
 Werkzeug==0.16.1
 certifi==2018.4.16
 click==6.7
