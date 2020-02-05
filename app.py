@@ -51,7 +51,7 @@ def prepare_image(img_path):
 #mongo.db.collection.remove( { } );
 
 @app.route("/", methods=["GET"])
-def index():
+def Home():
     # Main page
     #Food = mongo.db.collection.find_one()
     return render_template('Know_Before_You_Eat.html')
@@ -65,7 +65,7 @@ def Model():
     return render_template("Model.html")
     
 @app.route("/Recipe")    
-def Model():    
+def Recipe():    
     return render_template("Recipe.html")
 
 
