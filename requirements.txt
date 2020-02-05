@@ -4,10 +4,9 @@ pandas==0.24.2
 numpy==1.16.2
 gevent==1.4.0
 werkzeug==0.15.3
-PIL==5.4.1
+PIL==7.0.0
 certifi==2018.4.16
 click==6.7
-Flask==1.0.2
 Flask-SQLAlchemy==2.3.2
 itsdangerous==0.24
 Jinja2==2.10
