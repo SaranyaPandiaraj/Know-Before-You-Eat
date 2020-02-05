@@ -10,7 +10,8 @@ pandas==0.25.3
 Pillow==7.0.0
 splinter==0.13.0
 sseclient==0.0.24
-https://files.pythonhosted.org/packages/e9/f1/0133c8d8a4147149568d65bbca2ccdeedfe76e9b3c46cd134215f540cb2f/tensorflow-1.15.2-cp37-cp37m-macosx_10_11_x86_64.whl
+Keras==2.2.4
+tensorflow==1.12.0
 Werkzeug==0.16.1
 certifi==2018.4.16
 click==6.7
