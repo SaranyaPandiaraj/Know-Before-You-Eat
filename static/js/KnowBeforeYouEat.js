@@ -45,7 +45,8 @@ $(document).ready(function () {
                 // Get and display the result
                 $('.loader').hide();
                 $('#result').fadeIn(600);
-                $('#result').html(' <b>Output : </b>  ' + data);
+                $('#result').html(' <h3> <center>Predicted Dish </center></h3>  ' + data);
+                console.log(data.split())
                 console.log('Success!');
             },
         });

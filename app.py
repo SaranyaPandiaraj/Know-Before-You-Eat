@@ -13,6 +13,12 @@ from gevent.pywsgi import WSGIServer
 
 from flask_pymongo import PyMongo
 
+from splinter import Browser
+from bs4 import BeautifulSoup
+import pandas as pd
+import requests
+import os
+
 
 
 # Define a flask app
@@ -49,6 +55,20 @@ def index():
     # Main page
     #Food = mongo.db.collection.find_one()
     return render_template('Know_Before_You_Eat.html')
+
+@app.route("/About")    
+def About():    
+    return render_template("About.html")
+
+@app.route("/Model")    
+def Model():    
+    return render_template("Model.html")
+    
+@app.route("/Recipe")    
+def Model():    
+    return render_template("Recipe.html")
+
+
 
 @app.route("/predict", methods=["GET", "POST"])
 def upload():
@@ -87,15 +107,71 @@ def upload():
         Calories=np.array(Calories)
         Calories = str(Calories)
 
+        data = pred_label
+
+        if data=="beef carpaccio":
+           data="carpaccio"
+        elif data=="cheese plate":
+            data="cheese"
+        elif data=="chicken quesadilla":
+            data="quesadilla"
+        elif data=="chicken wings":
+            data="Buffalo wing"
+        elif data=="grilled salmon":
+            data="Salmon#As_food"    
+        elif data=="lobster roll sandwich":
+            data="lobster roll" 
+        elif data=="strawberry shortcake":
+            data="Shortcake#Strawberry_shortcake"
+
+        path={'executable_path':'/usr/local/bin/chromedriver'}
+        browser=Browser('chrome',**path,headless=True)
+
+        if data=="tuna tartare":
+            url="http://ahealthylifeforme.com/tuna-tartare-recipe/"
+            browser.visit(url)
+            html=browser.html
+            soup=BeautifulSoup(html,"html.parser")
+            var=soup.select_one('div.entry-content')
+            description=var.select('p')
+        else:
+            url="https://en.wikipedia.org/wiki/"
+            browser.visit(url+data)
+            html=browser.html
+            soup=BeautifulSoup(html,"html.parser")
+            var=soup.select_one('div.mw-parser-output')
+            description=var.select('p')
+
+        if (data=="greek salad" or data=="oysters" or data=="paella"):    
+            output=description[1].text
+        elif (data=="mussels" or data=="scallops"):
+            output=description[2].text
+        elif data=="Salmon#As_food":
+            output=description[3].text        
+        else:
+            if description[0].text!='\n':
+                output=description[0].text    
+            elif description[0].text=='\n' and description[1].text!='\n':
+                output=description[1].text
+            elif description[1].text=='\n' and description[2].text!='\n':
+                output=description[2].text
+        output
+        description = output
+        browser.quit()
+
+
+
         #Food_Data = {"food_nutrional_min":food_nutrional_min}
 
         #mongo.db.collection.update({}, Food_Data, upsert=True)
         
-        return "<i>" + pred_label.title()+" </i> => "+"<b>Probability : </b>"+str(preds.max(axis=-1)[0]) + '\n' + "<br><br>" +\
-        "<b>Nutrional Value - Min (kcal) : </b>" + food_nutrional_min + '\n' + "<br><br>" + \
-        "<b>Nutrional Value - Max (kcal): </b>" + food_nutrional_max + '\n' + "<br><br>" + \
-        "<b> Unit : </b>" + Unit + '\n' + \
-        "<b> Avg Cal : </b>" + Calories
+        return "<center><i><h4>" + pred_label.title()+" </h4></i> "+"<b><h3>Probability</h3></b><h4>"+str(preds.max(axis=-1)[0]) + '\n' + "</h4><br><br><b><h4 class=\"desc\">" +\
+        description + "</h4><br><br>" +\
+        "<div class=\"heading-section\"><h2 class=\"mb-4\"><span>Nutrional Facts</span></h2></div><hr></hr>" + \
+        "<h5><b>Nutrional Value - Min (kcal) &nbsp;: &nbsp;</b>" + food_nutrional_min + '\n' + "<br><br>" + \
+        "<b>Nutrional Value - Max (kcal) &nbsp;: &nbsp;</b>" + food_nutrional_max + '\n' + "<br><br>" + \
+        "<b> Avg Calories &nbsp;: &nbsp;</b>" + Calories + "<br><br>" + \
+        "<b> Unit &nbsp;: &nbsp;</b>" + Unit + '\n' + "</h5></center>"
         
 
 
