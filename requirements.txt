@@ -3,7 +3,6 @@ bs4==0.0.1
 Flask==1.1.1
 Flask-PyMongo==2.3.0
 gevent==1.4.0
-GitPython==2.1.14
 itsdangerous==1.1.0
 Jinja2==2.11.0
 numpy==1.18.1
@@ -11,13 +10,12 @@ pandas==0.25.3
 Pillow==7.0.0
 splinter==0.13.0
 sseclient==0.0.24
-tensorflow==1.14.0
+tensorflow==1.15.*
 Werkzeug==0.16.1
 certifi==2018.4.16
 click==6.7
 Flask-SQLAlchemy==2.3.2
 MarkupSafe==1.0
-python-dateutil==2.7.3
 pytz==2018.5
 six==1.11.0
 SQLAlchemy==1.2.10
