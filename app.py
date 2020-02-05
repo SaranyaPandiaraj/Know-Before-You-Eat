@@ -46,9 +46,6 @@ def prepare_image(img_path):
     x = np.expand_dims(x, axis=0)
     return x
 
-# Use PyMongo to establish Mongo connection
-#mongo = PyMongo(app, uri="mongodb://localhost:27017/Food")
-#mongo.db.collection.remove( { } );
 
 @app.route("/", methods=["GET"])
 def Home():
