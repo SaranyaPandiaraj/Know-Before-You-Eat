@@ -26,7 +26,7 @@ app = Flask(__name__)
 
 # Model saved with Keras model.save()
 #MODEL_PATH = os.path.join("models","keras_models", "model-mobilenet-RMSprop0.0002-001-0.930507-0.647776.h5")
-MODEL_PATH = os.path.join("models","keras_models", "model-mobilenet-RMSprop0.0002-007-0.984544-0.698516.h5")
+MODEL_PATH = os.path.join("models","keras_models", "model-mobilenet-RMSprop0.0002-008-0.995584-0.711503.h5")
 
 # Load your trained model
 model = load_model(MODEL_PATH)
@@ -64,10 +64,6 @@ def About():
 def Model():    
     return render_template("Model.html")
     
-@app.route("/Recipe")    
-def Recipe():    
-    return render_template("Recipe.html")
-
 
 
 @app.route("/predict", methods=["GET", "POST"])
@@ -141,6 +137,7 @@ def upload():
             soup=BeautifulSoup(html,"html.parser")
             var=soup.select_one('div.mw-parser-output')
             description=var.select('p')
+            nutri=soup.select_one('table.infobox')
 
         if (data=="greek salad" or data=="oysters" or data=="paella"):    
             output=description[1].text
@@ -171,7 +168,9 @@ def upload():
         "<h5><b>Nutrional Value - Min (kcal) &nbsp;: &nbsp;</b>" + food_nutrional_min + '\n' + "<br><br>" + \
         "<b>Nutrional Value - Max (kcal) &nbsp;: &nbsp;</b>" + food_nutrional_max + '\n' + "<br><br>" + \
         "<b> Avg Calories &nbsp;: &nbsp;</b>" + Calories + "<br><br>" + \
-        "<b> Unit &nbsp;: &nbsp;</b>" + Unit + '\n' + "</h5></center>"
+        "<b> Unit &nbsp;: &nbsp;</b>" + Unit + '\n' + "</h5></center> <br><br>" + \
+        "<div id=\"Recipe\">class=\"heading-section\"><h2 class=\"mb-4\"><span>Recipe - Cookbook </span></h2></div><hr></hr>" + \
+        str(nutri) 
         
 
 
