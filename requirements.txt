@@ -34,3 +34,6 @@ widgetsnbextension==3.4.2
 wincertstore==0.2
 gevent==1.4.0
 splinter==0.13.0
+beautifulsoup4==4.8.2
+bs4==0.0.1
+Flask-PyMongo==2.3.0
