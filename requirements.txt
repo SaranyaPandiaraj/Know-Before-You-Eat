@@ -33,3 +33,4 @@ Werkzeug==0.14.1
 widgetsnbextension==3.4.2
 wincertstore==0.2
 gevent==1.4.0
+splinter==0.13.0
