@@ -10,3 +10,4 @@ splinter==0.13.0
 tensorflow==1.14.0
 Werkzeug==0.16.1
 gunicorn==19.0.0
+requests
