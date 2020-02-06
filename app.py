@@ -53,11 +53,6 @@ def Home():
     #Food = mongo.db.collection.find_one()
     return render_template('Know_Before_You_Eat.html')
 
-
-
-@app.route("/Model")    
-def Model():    
-    return render_template("Model.html")
     
 
 
@@ -151,11 +146,6 @@ def upload():
         description = output
         browser.quit()
 
-
-
-        #Food_Data = {"food_nutrional_min":food_nutrional_min}
-
-        #mongo.db.collection.update({}, Food_Data, upsert=True)
         
         return "<center><i><h4>" + pred_label.title()+" </h4></i> "+"<b><h3>Probability</h3></b><h4>"+str(preds.max(axis=-1)[0]) + '\n' + "</h4><br><br><b><h4 class=\"desc\">" +\
         description + "</h4><br><br>" +\
