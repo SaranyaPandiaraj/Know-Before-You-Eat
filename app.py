@@ -53,9 +53,7 @@ def Home():
     #Food = mongo.db.collection.find_one()
     return render_template('Know_Before_You_Eat.html')
 
-@app.route("/About")    
-def About():    
-    return render_template("About.html")
+
 
 @app.route("/Model")    
 def Model():    
@@ -136,9 +134,9 @@ def upload():
             description=var.select('p')
             nutri=soup.select_one('table.infobox')
 
-        if (data=="greek salad" or data=="oysters" or data=="paella"):    
+        if (data=="greek salad" or data=="oysters" or data=="smoked scallop" or data=="paella"):    
             output=description[1].text
-        elif (data=="mussels" or data=="scallops"):
+        elif data=="mussels" :
             output=description[2].text
         elif data=="Salmon#As_food":
             output=description[3].text        
@@ -166,7 +164,7 @@ def upload():
         "<b>Nutrional Value - Max (kcal) &nbsp;: &nbsp;</b>" + food_nutrional_max + '\n' + "<br><br>" + \
         "<b> Avg Calories &nbsp;: &nbsp;</b>" + Calories + "<br><br>" + \
         "<b> Unit &nbsp;: &nbsp;</b>" + Unit + '\n' + "</h5></center> <br><br>" + \
-        "<div id=\"Recipe\">class=\"heading-section\"><h2 class=\"mb-4\"><span>Recipe - Cookbook </span></h2></div><hr></hr>" + \
+        "<div id=\"Recipe\" class=\"heading-section\"><h2 class=\"mb-4\"><span>Recipe - Cookbook </span></h2></div><hr></hr>" + \
         str(nutri) 
         
 
