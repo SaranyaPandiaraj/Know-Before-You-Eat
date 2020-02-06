@@ -116,7 +116,7 @@ def upload():
             data="Shortcake#Strawberry_shortcake"
 
         path={'executable_path':'/usr/local/bin/chromedriver'}
-        browser=Browser('chrome',**path,headless=True)
+        browser=Browser('chrome',path,headless=True)
 
         if data=="tuna tartare":
             url="http://ahealthylifeforme.com/tuna-tartare-recipe/"
