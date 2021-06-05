@@ -6,9 +6,6 @@ An Interactive web application for identifying food names based on the images, p
 
 ![Home Page Pic](KnowBeforeYouEat.png)
 
-## <ins> Presentation Link </ins>
-https://docs.google.com/presentation/d/1L3HPKQ_NltZVhTflytylM7TNFtg3tfW1BnI9JeCAXP4/edit?usp=sharing
-
 ## <ins> Source Data </ins>
 
 1) Food101 Dataset
